@@ -1,0 +1,37 @@
+<!-- <div class="container">
+    <h1>Login</h1>
+
+    <form (ngSubmit)="login()">
+      <label for="username">Username:</label>
+      <input name="username" type="text" id="username" [(ngModel)]="username" required>
+
+      <label for="password">Password:</label>
+      <input name="password" type="password" id="password" [(ngModel)]="password" required>
+
+      <button type="submit">Login</button>
+    </form>
+  </div>
+   -->
+
+
+   <div class="container">
+    <h1>Login</h1>
+
+    <form (ngSubmit)="login()" #loginForm="ngForm" novalidate>
+      <label for="username">Username:</label>
+    <input type="text" id="username" [(ngModel)]="username" name="username" [ngModelOptions]="{standalone: true}" required
+           #usernameNgModel="ngModel">
+    <div *ngIf="usernameNgModel.invalid && (usernameNgModel.dirty || usernameNgModel.touched)"
+         class="error-message">Username is required</div>
+
+           <label for="password">Password:</label>
+    <input type="password" id="password" [(ngModel)]="password" name="password" [ngModelOptions]="{standalone: true}" required
+           #passwordNgModel="ngModel">
+    <div *ngIf="passwordNgModel.invalid && (passwordNgModel.dirty || passwordNgModel.touched || loginForm.submitted)"
+         class="error-message">Password is required</div>
+      <button type="submit" [disabled]="loginForm.invalid">Login</button>
+    </form>
+  </div>
+
+
+

@@ -1,0 +1,22 @@
+<ul>
+  <li *ngFor="let team of teams">
+    {{ team.name }} (Budget: {{ team.maximumBudget }})
+    <button (click)="onEditTeam(team)">Edit</button>
+    <button (click)="onDeleteTeam(team.id)">Delete</button>
+  </li>
+</ul>
+
+<!-- Edit Team Form -->
+<div *ngIf="editedTeam">
+  <h2>Edit Team</h2>
+  <form (ngSubmit)="onSaveEditedTeam()">
+    <label for="editTeamName">Team Name:</label>
+    <input type="text" id="editTeamName" [(ngModel)]="editedTeam.name" name="editTeamName" required>
+
+    <label for="editMaximumBudget">Maximum Budget:</label>
+    <input type="number" id="editMaximumBudget" [(ngModel)]="editedTeam.maximumBudget" name="editMaximumBudget" required>
+
+    <button type="submit">Save</button>
+    <button type="button" (click)="onCancelEditTeam()">Cancel</button>
+  </form>
+</div>

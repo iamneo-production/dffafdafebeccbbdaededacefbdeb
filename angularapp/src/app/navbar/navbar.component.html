@@ -1,0 +1,30 @@
+<!-- <nav>
+  <div class="container">
+    <div class="logo">
+      IPL Bidding App
+    </div>
+    <ul class="nav-links">
+      <li><a routerLink="/">Home</a></li>
+      <li><a routerLink="/admin" >Admin</a></li>
+      <li><a routerLink="/organizer" >Organizer</a></li>
+      <li><a (click)="logout()" >Logout</a></li>
+    </ul>
+  </div>
+</nav> -->
+
+<nav>
+  <div class="container">
+    <div class="logo">
+      IPL Bidding App
+    </div>
+    <ul class="nav-links">
+      <li><a routerLink="/">Home</a></li>
+      <li><a routerLink="/login" *ngIf="!isLoggedIn && !isAdmin">Login</a></li>
+      <li><a routerLink="/register" *ngIf="!isLoggedIn && !isAdmin">Register</a></li>
+      <li><a routerLink="/admin" *ngIf="isAdmin">Admin</a></li>
+      <li><a routerLink="/organizer" *ngIf="isOrganizer">Organizer</a></li>
+      <li><a (click)="logout()" *ngIf="isLoggedIn">Logout</a></li>
+    </ul>
+  </div>
+</nav>
+

@@ -1,0 +1,167 @@
+<!-- <div class="container">
+    <h1>Admin Panel</h1>
+
+    <div>
+      <h2>Create New Team</h2>
+      <form (ngSubmit)="createTeam()" ngForm>
+        <label for="teamName">Team Name:</label>
+        <input name="teamName" type="text" id="teamName" [(ngModel)]="newTeam.name" required>
+
+        <label for="maximumBudget">Maximum Budget:</label>
+        <input name="maximumBudget" type="number" id="maximumBudget" [(ngModel)]="newTeam.maximumBudget" required>
+
+        <button type="submit">Create</button>
+      </form>
+    </div>
+
+    <div>
+      <h2>Team List</h2>
+      <ul>
+        <li *ngFor="let team of teams">
+          {{ team.name }} (Budget: {{ team.maximumBudget }})
+          <button (click)="editTeam(team)">Edit</button>
+          <button (click)="deleteTeam(team.id)">Delete</button>
+        </li>
+      </ul>
+    </div>
+
+    <div>
+      <h2>Create New Player</h2>
+      <form (ngSubmit)="createPlayer()">
+        <label for="playerName">Player Name:</label>
+        <input name="playerName" type="text" id="playerName" [(ngModel)]="newPlayer.name" required>
+
+        <label for="playerAge">Player Age:</label>
+        <input name="playerAge" type="number" id="playerAge" [(ngModel)]="newPlayer.age" required>
+
+        <label for="category">Player Category:</label>
+        <input name="category" type="text" id="category" [(ngModel)]="newPlayer.category" required>
+
+        <label for="biddingPrice">Player Bidding Price:</label>
+        <input name="biddingPrice" type="number" id="biddingPrice" [(ngModel)]="newPlayer.biddingPrice" required>
+
+
+
+        <button type="submit">Create</button>
+      </form>
+    </div>
+
+    <div>
+      <h2>Player List</h2>
+      <ul>
+        <li *ngFor="let player of players">
+          {{ player.name }} (Age: {{ player.age   }}   category: {{ player.category   }} BiddingPrice: {{ player.biddingPrice }} )
+          <button (click)="editPlayer(player)">Edit</button>
+          <button (click)="deletePlayer(player.id)">Delete</button>
+        </li>
+      </ul>
+    </div>
+  </div>
+   -->
+   <div class="container">
+    <h1>Admin Panel</h1>
+
+    <!-- Create Team Form -->
+    <div>
+      <h2>Create New Team</h2>
+      <form (ngSubmit)="createTeam()" #createTeamForm="ngForm" novalidate>
+        <label for="teamName">Team Name:</label>
+        <input type="text" id="teamName" [(ngModel)]="newTeam.name" name="teamName" [ngModelOptions]="{standalone: true}" required #teamnameNgModel="ngModel" >
+        <div *ngIf="teamnameNgModel.invalid && (teamnameNgModel.dirty || teamnameNgModel.touched)"
+           class="error-message">TeamName is required</div>
+
+        <label for="maximumBudget">Maximum Budget:</label>
+        <input type="number" id="maximumBudget" [(ngModel)]="newTeam.maximumBudget" name="maximumBudget" required>
+
+        <button id="createTeam" type="submit" [disabled]="createTeamForm.invalid">Create</button>
+      </form>
+    </div>
+
+
+    <!-- Team List -->
+    <div>
+      <h2>Team List</h2>
+      <!-- <ul> -->
+        <app-team [teams]="teams"
+        [editedTeam]="editedTeam"
+        (editTeamEvent)="editTeam($event)"
+        (saveEditedTeamEvent)="saveEditedTeam()"
+        (cancelEditTeamEvent)="cancelEditTeam()"
+        (deleteTeamEvent)="deleteTeam($event)">
+                  </app-team>
+        <!-- <li *ngFor="let team of teams">
+          {{ team.name }} (Budget: {{ team.maximumBudget }})
+          <button (click)="editTeam(team)">Edit</button>
+          <button (click)="deleteTeam(team.id)">Delete</button>
+        </li> -->
+      <!-- </ul> -->
+    </div>
+
+    <!-- Edit Team Form -->
+  <!-- <div *ngIf="editedTeam">
+    <h2>Edit Team</h2>
+    <form (ngSubmit)="saveEditedTeam()">
+      <label for="editTeamName">Team Name:</label>
+      <input type="text" id="editTeamName" [(ngModel)]="editedTeam.name" name="editTeamName" required>
+
+      <label for="editMaximumBudget">Maximum Budget:</label>
+      <input type="number" id="editMaximumBudget" [(ngModel)]="editedTeam.maximumBudget" name="editMaximumBudget" required>
+
+      <button type="submit">Save</button>
+      <button type="button" (click)="cancelEditTeam()">Cancel</button>
+    </form>
+  </div> -->
+
+    <!-- Create Player Form -->
+    <div>
+      <h2>Create New Player</h2>
+      <form (ngSubmit)="createPlayer()">
+        <label for="playerName">Player Name:</label>
+        <input type="text" id="playerName" [(ngModel)]="newPlayer.name" name="playerName" required>
+
+        <label for="playerAge">Player Age:</label>
+        <input type="number" id="playerAge" [(ngModel)]="newPlayer.age" name="playerAge" required>
+
+        <!-- Other player fields (category, bidding price, etc.) can be added here -->
+
+        <button type="submit">Create</button>
+      </form>
+    </div>
+
+    <!-- Player List -->
+    <div>
+      <h2>Player List</h2>
+      <app-player [players]="players"
+              [editedPlayer]="editedPlayer"
+              (editPlayerEvent)="editPlayer($event)"
+              (saveEditedPlayerEvent)="saveEditedPlayer()"
+              (cancelEditPlayerEvent)="cancelEditPlayer()"
+              (deletePlayerEvent)="deletePlayer($event)">
+      </app-player>
+      <!-- <ul>
+        <li *ngFor="let player of players">
+          {{ player.name }} (Age: {{ player.age }})
+          <button (click)="editPlayer(player)">Edit</button>
+          <button (click)="deletePlayer(player.id)">Delete</button>
+        </li>
+      </ul> -->
+    </div>
+
+
+  <!-- Edit Player Form -->
+  <!-- <div *ngIf="editedPlayer">
+    <h2>Edit Player</h2>
+    <form (ngSubmit)="saveEditedPlayer()">
+      <label for="editPlayerName">Player Name:</label>
+      <input type="text" id="editPlayerName" [(ngModel)]="editedPlayer.name" name="editPlayerName" required>
+
+      <label for="editPlayerAge">Player Age:</label>
+      <input type="number" id="editPlayerAge" [(ngModel)]="editedPlayer.age" name="editPlayerAge" required>
+
+
+      <button type="submit">Save</button>
+      <button type="button" (click)="cancelEditPlayer()">Cancel</button>
+    </form>
+  </div> -->
+  </div>
+
